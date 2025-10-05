@@ -1,10 +1,16 @@
 from fastapi import FastAPI
 from app.routers import auth_router, health_router
 
-def create_app() -> FastAPI:
-    app = FastAPI(title="FastAPI Starter", version="0.1.0")
-    app.include_router(health_router.router)
-    app.include_router(auth_router.router)
-    return app
+app = FastAPI(title="FastAPI Live Starter", version="1.0")
 
-app = create_app()
+# Include routes
+app.include_router(health_router.router)
+app.include_router(auth_router.router)
+
+@app.get("/")
+def root():
+    return {"message": "Running Good!"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)
